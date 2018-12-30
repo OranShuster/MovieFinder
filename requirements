@@ -1,0 +1,7 @@
+requests
+babel
+pytz
+click
+colorama
+pytest
+pytest-mock
