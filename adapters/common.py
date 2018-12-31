@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import List
 
 import click
+from tzlocal import get_localzone
 
 import settings
 from adapters.enums import CompanyNames, CityNames
@@ -58,7 +59,9 @@ class TheatreAdapter(metaclass=ABCMeta):
 
 
 def today():
-    return datetime.now().replace(hour=0, minute=0, second=0)
+    return datetime.now(tz=get_localzone()).replace(
+        hour=0, minute=0, second=0, microsecond=0
+    )
 
 
 def query_adapters(event_date) -> List[List]:

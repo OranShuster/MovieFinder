@@ -5,3 +5,4 @@ click
 colorama
 pytest
 pytest-mock
+tzlocal

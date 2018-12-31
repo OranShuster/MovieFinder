@@ -3,9 +3,9 @@ from typing import List
 
 import requests
 
-from adapters.yes_planet import enums
-from adapters.common import TheatreAdapter, today, Event
+from adapters.common import TheatreAdapter, Event
 from adapters.enums import CityNames, CompanyNames
+from adapters.yes_planet import enums
 
 
 class YesPlanetTheatre(TheatreAdapter):
