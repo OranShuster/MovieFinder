@@ -44,9 +44,7 @@ class YesPlanetTheatre(TheatreAdapter):
         return parsed_event_list
 
     def get_events(self, event_date: datetime):
-        if event_date < today():
-            raise AssertionError("Event date given {} is in the past".format(event_date))
-
+        self.validate_event_date(event_date=event_date)
         event_list_from_server = self._get_event_list(event_date=event_date)
         parsed_event_list = self._parse_event_list(event_list=event_list_from_server)
         return parsed_event_list

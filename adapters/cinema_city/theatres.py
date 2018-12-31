@@ -40,9 +40,7 @@ class CinemaCityTheatre(TheatreAdapter):
         return parsed_event_list
 
     def get_events(self, event_date):
-        if event_date < datetime.now().replace(hour=0, minute=0, second=0):
-            raise AssertionError("Given date {} is in the past".format(event_date))
-
+        self.validate_event_date(event_date=event_date)
         event_list_from_server = self._get_event_list(event_date)
         parsed_event_list = self._parse_event_list(event_list_from_server)
         return parsed_event_list

@@ -40,6 +40,10 @@ class TheatreAdapter(metaclass=ABCMeta):
         self.city = city
         self.company = company
 
+    def validate_event_date(self, event_date: datetime):
+        if event_date < today():
+            raise AssertionError("Given date {} is in the past".format(event_date))
+
     @abstractmethod
     def _get_event_list(self, event_date: datetime) -> list:
         pass
