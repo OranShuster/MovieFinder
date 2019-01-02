@@ -7,12 +7,9 @@ from tzlocal import get_localzone
 
 import settings
 from adapters.enums import CompanyNames, CityNames
+from adapters.enums import CompanyNames, CityNames, EventTags
 
 
-class EventTag(object):
-    def __init__(self, name: str, tag_type: str):
-        self.name = name
-        self.tag_type = tag_type
 
 
 class Event(object):
@@ -22,13 +19,17 @@ class Event(object):
         date: datetime,
         city: CityNames,
         company: CompanyNames,
-        tags: List[EventTag],
+        tags: List[EventTags],
     ):
         self.name = name
         self.date = date
         self.city = city
         self.company = company
         self.tags = tags
+
+    @property
+    def tags_str(self):
+        return " ".join([click.style(tag, bg="red", bold=True) for tag in self.tags])
 
     def __str__(self):
         return "{} {}".format(self.company, self.city)
