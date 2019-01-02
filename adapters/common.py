@@ -58,6 +58,10 @@ class TheatreAdapter(metaclass=ABCMeta):
     def get_events(self, event_date: datetime) -> list:
         pass
 
+    @abstractmethod
+    def _parse_event_tags(self, *args, **kwargs):
+        pass
+
 
 def today():
     return datetime.now(tz=get_localzone()).replace(
