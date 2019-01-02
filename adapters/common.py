@@ -6,10 +6,15 @@ import click
 from tzlocal import get_localzone
 
 import settings
-from adapters.enums import CompanyNames, CityNames
+from adapters.consts import UNICODE_HEBREW_RANGE_START, UNICODE_HEBREW_RANGE_END
 from adapters.enums import CompanyNames, CityNames, EventTags
 
 
+def is_hebrew(s: str) -> bool:
+    for char in s:
+        if UNICODE_HEBREW_RANGE_START <= ord(char) <= UNICODE_HEBREW_RANGE_END:
+            return True
+    return False
 
 
 class Event(object):
@@ -31,8 +36,25 @@ class Event(object):
     def tags_str(self):
         return " ".join([click.style(tag, bg="red", bold=True) for tag in self.tags])
 
+    @property
+    def name_aligned(self):
+        # Add unicode RTL modifier for hebrew text
+        if is_hebrew(self.name):
+            return "\u200E{name}".format(name=self.name)
+        else:
+            return self.name
+
+    def as_table_row(self):
+        return [self.date, self.name_aligned, self.tags_str, self.company, self.city]
+
     def __str__(self):
-        return "{} {}".format(self.company, self.city)
+        return "* {date} - {name} - {tags} - {company} {city}".format(
+            date=self.date,
+            name=self.name_aligned,
+            tags=self.tags_str,
+            company=self.company,
+            city=self.city,
+        )
 
 
 class TheatreAdapter(metaclass=ABCMeta):

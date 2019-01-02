@@ -1,10 +1,9 @@
-from datetime import datetime
 from datetime import timedelta
 from itertools import chain
 from typing import List
 
 import click
-
+from tabulate import tabulate
 import settings
 from adapters.common import query_adapters, Event, today
 
@@ -44,11 +43,8 @@ def show_events(date: str, city: str, company: str):
     adapters_responses = query_adapters(date_parsed)
     combined_adapters: List[Event] = list(chain(*adapters_responses))
     combined_adapters.sort(key=lambda x: x.date)
-    for event in combined_adapters:
-        event_str = "* {date} - \u200E{name} - {location}".format(
-            name=event.name, date=event.date, location=event
-        )
-        click.echo(event_str)
+    events_table = [event.as_table_row() for event in combined_adapters]
+    click.echo(tabulate(events_table, tablefmt="plain", numalign="left", stralign="left"))
     click.echo("")
 
 
