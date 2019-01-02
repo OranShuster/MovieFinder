@@ -1,17 +1,48 @@
 import logging
 from datetime import datetime
+from enum import Enum
+from typing import Tuple, List
 
 import requests
 from babel.dates import format_datetime
 
 from adapters.cinema_city import enums
 from adapters.common import TheatreAdapter, Event
-from adapters.enums import CompanyNames, CityNames
+from adapters.enums import CompanyNames, CityNames, EventTags
 
 logger = logging.getLogger("CinemaCityTheatre")
 
 
+# noinspection PyRedundantParentheses
 class CinemaCityTheatre(TheatreAdapter):
+    def _parse_event_tags(self, event_name: str) -> Tuple[str, List[Enum]]:
+        # First check for hyphen versions
+        query_ind = event_name.find(enums.EventNameTagEndings.EnglishWithHyphen)
+        if query_ind != -1:
+            return (event_name[:query_ind], [EventTags.English])
+
+        query_ind = event_name.find(enums.EventNameTagEndings.HebrewWithHyphen)
+        if query_ind != -1:
+            return (event_name[:query_ind], [EventTags.Hebrew])
+
+        query_ind = event_name.find(enums.EventNameTagEndings.DubbedWithHyphen)
+        if query_ind != -1:
+            return (event_name[:query_ind], [EventTags.DubbedHebrew])
+
+        query_ind = event_name.find(enums.EventNameTagEndings.English)
+        if query_ind != -1:
+            return event_name[:query_ind], [EventTags.English]
+
+        query_ind = event_name.find(enums.EventNameTagEndings.Hebrew)
+        if query_ind != -1:
+            return (event_name[:query_ind], [EventTags.Hebrew])
+
+        query_ind = event_name.find(enums.EventNameTagEndings.Dubbed)
+        if query_ind != -1:
+            return (event_name[:query_ind], [EventTags.DubbedHebrew])
+
+        return event_name, []
+
     def _get_event_list(self, event_date: datetime):
         today_babel = format_datetime(
             event_date, format=enums.DATE_URL_FORMAT, locale=enums.THEATRE_LOCALE
@@ -24,16 +55,19 @@ class CinemaCityTheatre(TheatreAdapter):
     def _parse_event_list(self, event_list_from_server: list):
         parsed_event_list = []
         for event in event_list_from_server:
+            event_name = event[enums.EventListKeys.Name]
             event_datetime = datetime.strptime(
                 event[enums.EventListKeys.Dates][enums.EventListKeys.Date],
                 enums.EVENT_LIST_DATETIME_FORMAT,
             )
+            event_name, tags = self._parse_event_tags(event_name=event_name)
+
             new_event = Event(
-                name=event[enums.EventListKeys.Name],
+                name=event_name,
                 date=event_datetime,
                 city=self.city,
                 company=self.company,
-                tags=[],
+                tags=tags,
             )
             parsed_event_list.append(new_event)
 
