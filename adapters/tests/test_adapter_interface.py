@@ -11,7 +11,7 @@ def verify_adapter_response(adapter_response):
         assert isinstance(event, Event)
 
 
-class TestCinemaCityAdapters:
+class TestAdaptersParsedEventsType:
     @pytest.mark.parametrize("adapter_instance", settings.adapters)
     def test_adapter_today(self, adapter_instance: TheatreAdapter):
         adapter_response = adapter_instance.get_events(today())
