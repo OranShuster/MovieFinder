@@ -3,8 +3,8 @@ from typing import List
 
 import requests
 
-from adapters.common import TheatreAdapter, Event, EventTags
-from adapters.enums import CityNames, CompanyNames
+from adapters.common import Event, TheatreAdapter
+from adapters.enums import CityNames, CompanyNames, EventTags
 from adapters.yes_planet import enums
 
 
@@ -70,5 +70,15 @@ class YesPlanetRishonLeZion(YesPlanetTheatre):
             theatre_id=1072,
             display_name="Yes Planet Rishon Le Zion",
             city=CityNames.RishonLeZion,
+            company=CompanyNames.YesPlanet,
+        )
+
+
+class YesPlanetBeerSheba(YesPlanetTheatre):
+    def __init__(self):
+        super(YesPlanetBeerSheba, self).__init__(
+            theatre_id=1074,
+            display_name="Yes Planet Beer Sheba",
+            city=CityNames.BeerSheba,
             company=CompanyNames.YesPlanet,
         )
