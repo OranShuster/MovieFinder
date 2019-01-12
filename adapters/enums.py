@@ -13,6 +13,7 @@ class CompanyNames(object):
 class CityNames(object):
     RishonLeZion = "Rishon Le Zion"
     Glilot = "Glilot"
+    BeerSheba = "Beer Sheba"
 
 
 class EventTags(object):
