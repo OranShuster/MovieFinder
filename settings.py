@@ -1,7 +1,7 @@
 import logging
 
-from adapters.cinema_city.theatres import CinemaCityRishonLeZion
-from adapters.yes_planet.theatres import YesPlanetRishonLeZion
+from adapters.cinema_city.theatres import CinemaCityRishonLeZion, CinemaCityGlilot
+from adapters.yes_planet.theatres import YesPlanetRishonLeZion, YesPlanetBeerSheba
 
 DEBUG = True
 
@@ -18,4 +18,9 @@ logging.basicConfig(
     level=logging.DEBUG if DEBUG else logging.INFO,
 )
 
-adapters = [CinemaCityRishonLeZion(), YesPlanetRishonLeZion()]
+adapters = [
+    CinemaCityRishonLeZion(),
+    YesPlanetRishonLeZion(),
+    CinemaCityGlilot(),
+    YesPlanetBeerSheba(),
+]
