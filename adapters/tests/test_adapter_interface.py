@@ -14,5 +14,5 @@ def verify_adapter_response(adapter_response):
 class TestAdaptersParsedEventsType:
     @pytest.mark.parametrize("adapter_instance", settings.adapters)
     def test_adapter_today(self, adapter_instance: TheatreAdapter):
-        adapter_response = adapter_instance.get_events(today())
+        adapter_response = adapter_instance.get_events(event_date=today())
         verify_adapter_response(adapter_response)

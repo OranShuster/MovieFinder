@@ -1,10 +1,13 @@
+import inspect
 import logging
 
-from adapters.cinema_city.theatres import CinemaCityRishonLeZion, CinemaCityGlilot
-from adapters.yes_planet.theatres import YesPlanetRishonLeZion, YesPlanetBeerSheba
+from adapters.cinema_city import theatres as cc_theatres
+from adapters.common import TheatreAdapter
+from adapters.yes_planet import theatres as yp_theatres
 
 DEBUG = True
 
+AdapterBaseClass = TheatreAdapter
 # Disable requests and urllib3 logging
 logging.getLogger("requests").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
@@ -17,10 +20,16 @@ logging.basicConfig(
     format=logging_format,
     level=logging.DEBUG if DEBUG else logging.INFO,
 )
+cc_adapters = []
+for name, adapter in inspect.getmembers(cc_theatres, inspect.isclass):
+    if adapter.__module__ == cc_theatres.__name__:
+        if issubclass(adapter, AdapterBaseClass):
+            cc_adapters.append(adapter())
 
-adapters = [
-    CinemaCityRishonLeZion(),
-    YesPlanetRishonLeZion(),
-    CinemaCityGlilot(),
-    YesPlanetBeerSheba(),
-]
+yp_adapters = []
+for name, adapter in inspect.getmembers(yp_theatres, inspect.isclass):
+    if adapter.__module__ == yp_theatres.__name__:
+        if issubclass(adapter, AdapterBaseClass):
+            yp_adapters.append(adapter())
+
+adapters = cc_adapters + yp_adapters
