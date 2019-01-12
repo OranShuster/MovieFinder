@@ -1,0 +1,29 @@
+[
+    {
+        "films": [
+            {
+                "id": "2758s2r",
+                "name": "אהבה מריקוד ראשון",
+                "length": 111,
+                "posterLink": "/xmedia-cw/repo/feats/posters/2758S2R-md.jpg",
+                "videoLink": "https://www.youtube.com/watch?v=QSu5ciLAPZo",
+                "link": "/films/finding-your-feet",
+                "weight": 0,
+                "releaseYear": "2017",
+                "attributeIds": []
+            }
+        ],
+        "events": [
+            {
+                "id": "289750",
+                "filmId": "2758s2r",
+                "cinemaId": "1072",
+                "businessDay": "2019-01-02",
+                "eventDateTime": "2019-01-02T14:20:00",
+                "attributeIds": [],
+                "bookingLink": "/ecom-tickets?tid=1072&prsntId=107216010219-289750",
+                "soldOut": false
+            }
+        ]
+    }
+]
