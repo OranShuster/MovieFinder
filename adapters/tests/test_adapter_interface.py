@@ -16,3 +16,8 @@ class TestAdaptersParsedEventsType:
     def test_adapter_today(self, adapter_instance: TheatreAdapter):
         adapter_response = adapter_instance.get_events(event_date=today())
         verify_adapter_response(adapter_response)
+
+
+class TestAdaptersInitialization:
+    def test_adapter_init(self):
+        assert len(settings.adapters) == 4
