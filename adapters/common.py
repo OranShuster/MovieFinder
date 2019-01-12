@@ -33,7 +33,7 @@ class Event(object):
 
     @property
     def tags_str(self):
-        return " ".join([click.style(tag, bg="red", bold=True) for tag in self.tags])
+        return " | ".join([click.style(tag, bg="red", bold=True) for tag in self.tags])
 
     @property
     def name_aligned(self):
@@ -47,6 +47,9 @@ class Event(object):
         return [self.date, self.name_aligned, self.tags_str, self.company, self.city]
 
     def __str__(self):
+        return self.__repr__()
+
+    def __repr__(self):
         return "* {date} - {name} - {tags} - {company} {city}".format(
             date=self.date,
             name=self.name_aligned,
