@@ -69,8 +69,3 @@ def verify_no_query(mocker):
 @pytest.mark.usefixtures(*["mock_no_adapters", "verify_no_query"])
 class TestShowEventsNoAdapters(ShowEventsTests):
     pass
-
-
-@pytest.mark.slow
-class TestShowEvents(ShowEventsTests):
-    pass
