@@ -5,7 +5,6 @@ from typing import List
 import click
 from tzlocal import get_localzone
 
-import settings
 from adapters.consts import UNICODE_HEBREW_RANGE_START, UNICODE_HEBREW_RANGE_END
 from adapters.enums import CompanyNames, CityNames, EventTags
 
@@ -91,9 +90,8 @@ def today():
     )
 
 
-def query_adapters(event_date) -> List[List]:
+def query_adapters(event_date: datetime, adapters: list) -> List[List]:
     adapters_responses = []
-    adapters = settings.adapters
     with click.progressbar(adapters, length=len(adapters)) as adapters_progress:
         adapter: TheatreAdapter
         for adapter in adapters_progress:

@@ -40,7 +40,7 @@ def show_events(date: str, city: str, company: str):
         else:
             raise AssertionError("Date given could not be parsed")
 
-    adapters_responses = query_adapters(date_parsed)
+    adapters_responses = query_adapters(date_parsed, settings.adapters)
     combined_adapters: List[Event] = list(chain(*adapters_responses))
     combined_adapters.sort(key=lambda x: x.date)
     events_table = [event.as_table_row() for event in combined_adapters]
