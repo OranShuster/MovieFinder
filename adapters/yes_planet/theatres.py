@@ -1,4 +1,4 @@
-from adapters.enums import CityNames, CompanyNames
+from adapters.enums import City, Company
 from adapters.yes_planet.lib import YesPlanetTheatre
 
 
@@ -9,8 +9,8 @@ class YesPlanetRishonLeZion(YesPlanetTheatre):
         super(YesPlanetRishonLeZion, self).__init__(
             theatre_id=self.THEATRE_ID,
             display_name="Yes Planet Rishon Le Zion",
-            city=CityNames.RishonLeZion,
-            company=CompanyNames.YesPlanet,
+            city=City.RishonLeZion,
+            company=Company.YesPlanet,
         )
 
 
@@ -21,6 +21,6 @@ class YesPlanetBeerSheba(YesPlanetTheatre):
         super(YesPlanetBeerSheba, self).__init__(
             theatre_id=self.THEATRE_ID,
             display_name="Yes Planet Beer Sheba",
-            city=CityNames.BeerSheba,
-            company=CompanyNames.YesPlanet,
+            city=City.BeerSheba,
+            company=Company.YesPlanet,
         )
