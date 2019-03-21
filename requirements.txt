@@ -5,5 +5,8 @@ click
 colorama
 pytest
 pytest-mock
+pytest-cov
+tmdbsimple
 tzlocal
 tabulate
+mypy
