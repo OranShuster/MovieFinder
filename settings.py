@@ -1,5 +1,8 @@
 import inspect
 import logging
+import os
+
+import tmdbsimple as tmdb
 
 from adapters.cinema_city import theatres as cc_theatres
 from adapters.common import TheatreAdapter
@@ -33,3 +36,6 @@ for name, adapter in inspect.getmembers(yp_theatres, inspect.isclass):
             yp_adapters.append(adapter())
 
 adapters = cc_adapters + yp_adapters
+
+TMDB_API_KEY = os.getenv("TMDB_API_KEY", None)
+tmdb.API_KEY = TMDB_API_KEY

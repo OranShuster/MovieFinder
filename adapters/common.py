@@ -22,6 +22,22 @@ def is_hebrew(s: str) -> bool:
     return False
 
 
+def _handle_event_name(name: str) -> str:
+    name_english = name
+    if is_hebrew(name):
+        start_time = time()
+        search = tmdb.Search()
+        response = search.movie(query=f'"{name}"', language="he")
+        logger.debug(f"Time it took to translate {name} was {time() - start_time}")
+        if len(response['results']) > 0:
+            first_result = response['results'][0]
+            if first_result['title'] == name:
+                name_english = first_result['original_title']
+    else:
+        name_english = name
+    return name_english
+
+
 class Event(object):
     def __init__(
             self,
@@ -31,7 +47,7 @@ class Event(object):
             company: Company,
             tags: List[EventTags],
     ):
-        self.name = name
+        self.name = _handle_event_name(name)
         self.date = date
         self.city = city
         self.company = company
